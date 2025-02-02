@@ -1,0 +1,60 @@
+
+
+void displayTimeVaccum(int coin,int minutes,int seconds){
+
+  credit[6] = highByte(coin);
+  credit[7]= lowByte(coin);
+  dwinSerial.write(credit, 8);
+delay(10);
+  minuteRamaseVaccum[6] = highByte(minutes);
+  minuteRamaseVaccum[7]= lowByte(minutes);
+  dwinSerial.write(minuteRamaseVaccum, 8);
+delay(10);
+  secundeRamaseVaccum[6] = highByte(seconds);
+  secundeRamaseVaccum[7] = lowByte(seconds);
+  dwinSerial.write(secundeRamaseVaccum, 8);
+delay(10);
+}
+void displayTimeAir(int coin,int minutes,int seconds){
+
+  credit[6] = highByte(coin);
+  credit[7]= lowByte(coin);
+  dwinSerial.write(credit, 8);
+delay(10);
+  minuteRamaseAir[6] = highByte(minutes);
+  minuteRamaseAir[7]= lowByte(minutes);
+  dwinSerial.write(minuteRamaseAir, 8);
+delay(10);
+  secundeRamaseAir[6] = highByte(seconds);
+  secundeRamaseAir[7] = lowByte(seconds);
+  dwinSerial.write(secundeRamaseAir, 8);
+delay(10);
+}
+void displayPriceAspirat(int priceAspirat,int minutesAspirat,int secondsAspirat){
+ // pretAspirat[6] = highByte(priceAspirat);
+  pretAspirat[7]= priceAspirat;
+  dwinSerial.write(pretAspirat, 8);
+delay(10);
+ // pretMinuteAspirat[6] = highByte(minutesAspirat);
+  pretMinuteAspirat[7]= minutesAspirat;
+  dwinSerial.write(pretMinuteAspirat, 8);
+delay(10);
+ // pretSecundeAspirat[6] = highByte(secondsAspirat);
+  pretSecundeAspirat[7] = secondsAspirat;
+  dwinSerial.write(pretSecundeAspirat, 8);
+delay(10);
+}
+void displayPriceAerComp(int priceAerComp,int minutesAerComp,int secondsAerComp){
+  //pretAerComprimat[6] = highByte(priceAerComp);
+  pretAerComprimat[7]= priceAerComp;
+  dwinSerial.write(pretAerComprimat, 8);
+delay(10);
+ // pretMinuteAerComprimat[6] = highByte(minutesAerComp);
+  pretMinuteAerComprimat[7]= minutesAerComp;
+  dwinSerial.write(pretMinuteAerComprimat, 8);
+delay(10);
+  //pretSecundeAerComprimat[6] = highByte(secondsAerComp);
+  pretSecundeAerComprimat[7] = secondsAerComp;
+  dwinSerial.write(pretSecundeAerComprimat, 8);
+delay(10);
+}
