@@ -3,27 +3,31 @@ void displayProgram(int selectProg){
 
   switch (selectProg){
     case 1:{
-      displayLcd(0,0,"Aspirare -Timp");
-      displayLcd(1,1,String(minuteRamase)+":"+String(secundeRamase)+" mm:ss");
+      displayLcd(0,0,"Program : Aspirare ");
+      displayLcd(1,1,"  Timp Ramas");
+      displayLcd(5,2,String(minuteRamase)+":"+String(secundeRamase)+" mm:ss");
     } break;
     case 2:{
-      displayLcd(0,0,"Parfum -Timp");
-      displayLcd(1,1,String(minuteRamase)+":"+String(secundeRamase)+" mm:ss");
+      displayLcd(0,0,"Program : Parfum");
+      displayLcd(1,1,"  Timp Ramas");
+      displayLcd(5,2,String(minuteRamase)+":"+String(secundeRamase)+" mm:ss");
     } break;
     case 3:{
-      displayLcd(0,0,"NegruCauciuc -Timp");
-      displayLcd(1,1,String(minuteRamase)+":"+String(secundeRamase)+" mm:ss");
+      displayLcd(0,0,"Program:NegruCauciuc");
+      displayLcd(1,1,"  Timp Ramas");
+      displayLcd(5,2,String(minuteRamase)+":"+String(secundeRamase)+" mm:ss");
     } break;
     case 4:{
-      displayLcd(0,0,"Aer Comprimat -Timp");
-      displayLcd(1,1,String(minuteRamase)+":"+String(secundeRamase)+" mm:ss");
+      displayLcd(0,0,"Program:AerComprimat");
+      displayLcd(1,1,"  Timp Ramas");
+      displayLcd(5,2,String(minuteRamase)+":"+String(secundeRamase)+" mm:ss");
     } break;
   }
 }
 
 void displayHmiProgram(int selectProg){
 
-
+//Serial.print(" SelectProg ");Serial.println(selectProg);
   switch (selectProg){
     case 1:{
       switchPage(1);
@@ -76,7 +80,7 @@ elapsedMillis timeContor; //declare global if you don't want it reset every time
     }break;
     case 2:{     
       lcd.clear();
-       startProgram(timeCoin2,programSelector,1);
+       startProgram(timeCoin2,programSelector,3);
        isOk = true;  
     }break;
     case 3:{   
@@ -86,7 +90,7 @@ elapsedMillis timeContor; //declare global if you don't want it reset every time
     }break;
     case 4:{   
       lcd.clear();  
-       startProgram(timeCoin4,programSelector,3);
+       startProgram(timeCoin4,programSelector,1);
        isOk = true;  
     }break;
   }
@@ -98,22 +102,31 @@ elapsedMillis timeContor; //declare global if you don't want it reset every time
     displayProgram(programSelector);
     displayHmiProgram(programSelector);
    pcf8574Run();
+   
   switch(keyPinOut){
     case 1:{
       lcd.clear();
-       startProgram(timeCoin1,programSelector,0);   
+      Serial.print("keyPinOut "); Serial.println(keyPinOut);   
+       startProgram(timeCoin1,programSelector,0);
+       
     }break;
     case 2:{  
       lcd.clear();   
-       startProgram(timeCoin2,programSelector,1);  
+       Serial.print("keyPinOut "); Serial.println(keyPinOut);  
+       startProgram(timeCoin2,programSelector,3);
+      
     }break;
     case 3:{  
       lcd.clear(); 
-       startProgram(timeCoin3,programSelector,2);   
+      Serial.print("keyPinOut "); Serial.println(keyPinOut);
+       startProgram(timeCoin3,programSelector,2); 
+         
     }break;
     case 4:{ 
       lcd.clear();    
-       startProgram(timeCoin4,programSelector,3);  
+      Serial.print("keyPinOut "); Serial.println(keyPinOut); 
+       startProgram(timeCoin4,programSelector,1); 
+       
     }break;
   }
     if(timeContor>interval){

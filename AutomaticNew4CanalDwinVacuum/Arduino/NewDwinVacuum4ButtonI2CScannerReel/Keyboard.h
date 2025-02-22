@@ -26,7 +26,7 @@ void pcf8574Run(){
     for(int i =0; i<4;i++){
  keyboardPin[i] = pcf8574.digitalRead(i);
  delay(2);
-    
+  // Serial.print("keyPinOut "); Serial.print(i);Serial.print(" = ");  Serial.println(keyboardPin[i]);
   }
   wdt_reset();
   //Keyboard for st1

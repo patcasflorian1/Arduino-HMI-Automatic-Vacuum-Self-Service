@@ -5,7 +5,8 @@ unsigned int timeDelay = 200;
 
 //Set time-price for startProgram
 void startProgram(int priceCoin,int selectProgram,int selectReel){
-  
+  //Serial.print(" SelectReel "); Serial.println(selectReel);
+  //Serial.print(" programSelectorO "); Serial.println(programSelector);
      int i = 0;
       while(i < 4){
       if(timeElapsedSt1Reel >= intervalSt1Reel){
@@ -70,7 +71,7 @@ void startProgram(int priceCoin,int selectProgram,int selectReel){
                     }      
      minuteRamase = totalTimeCoin/60;
      secundeRamase =totalTimeCoin%60;
-      programSelector=1;
+      
          } 
          break;
                case 3:
@@ -105,9 +106,10 @@ void startProgram(int priceCoin,int selectProgram,int selectReel){
          } 
          break;
        }
-        programSelector = selectReel+1;
+        programSelector = keyPinOut;
         keyPinOut = 0;
         digitalWrite(inhibitCoin,HIGH);
+        Serial.print(" programSelector "); Serial.println(programSelector);
   }
 //__end void startProgram 
 

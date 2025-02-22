@@ -18,7 +18,7 @@ void setup() {
   displayLcd(2,1," V 1.00EE ");
 
   displayLcd1(0,0,"WashCleanForRl");
-  displayLcd1(0,1,"Sn02B2-02/25 ");
+  displayLcd1(0,1,"Sn02B4-02/25 ");
   delay(3000); 
   lcd.clear();
   lcd1.clear();

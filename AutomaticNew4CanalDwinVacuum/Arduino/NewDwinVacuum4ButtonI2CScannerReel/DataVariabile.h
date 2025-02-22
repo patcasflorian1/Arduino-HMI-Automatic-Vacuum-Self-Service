@@ -98,6 +98,10 @@ void startSetup(){
     digitalWrite(pinReel[i],LOW);
     delay(15);
   }
+  pinMode(coinPin, INPUT);
+  pinMode(inhibitCoin, OUTPUT);
+  digitalWrite(coinPin,HIGH);
+  digitalWrite(inhibitCoin,LOW);
   timeCoin1 = EEPROM.get(timeCoins1,timeCoin1);
 timeCoin2 = EEPROM.get(timeCoins2,timeCoin2);
 timeCoin3 = EEPROM.get(timeCoins3,timeCoin3);
