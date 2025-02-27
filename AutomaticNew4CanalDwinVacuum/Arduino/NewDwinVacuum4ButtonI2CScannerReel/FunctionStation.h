@@ -1,7 +1,7 @@
 
 elapsedMillis timeElapsedSt1Reel; //declare global if you don't want it reset every time loop runs
-unsigned int intervalSt1Reel = 25;
-unsigned int timeDelay = 200;
+unsigned int intervalSt1Reel = 95;
+unsigned int timeDelay = 500;
 
 //Set time-price for startProgram
 void startProgram(int priceCoin,int selectProgram,int selectReel){

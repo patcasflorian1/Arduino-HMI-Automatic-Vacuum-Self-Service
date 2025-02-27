@@ -31,6 +31,7 @@ void setup() {
 }
 
 void loop() {
+ 
    wdt_reset();
    ledDriverRun();
    displayPriceAspirat(1,timeCoin1/60,timeCoin1%60);

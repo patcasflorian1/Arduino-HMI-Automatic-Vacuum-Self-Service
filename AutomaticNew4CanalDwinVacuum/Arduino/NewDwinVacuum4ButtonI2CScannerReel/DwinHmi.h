@@ -1,3 +1,35 @@
+
+void eraseText(int vpAddress,int textLength){
+dwinSerial.write(0x5A);  //Header
+dwinSerial.write(0xA5);  //Header
+dwinSerial.write(3 + textLength);  //Length (3:write,address low and high bytes)
+dwinSerial.write(0x82);  //Write command
+dwinSerial.write(lowByte(vpAddress));  //write address
+dwinSerial.write(highByte(vpAddress));  //write address
+for(int i = 0;i<textLength;i ++){
+  dwinSerial.write((byte)0x20); //write message (0x20 is ASCII code for space)
+}
+}
+void printf_dwin(uint16_t vp_address,String words)
+{
+  Serial.print("erase ");Serial.println(erase);
+  if(erase == true){
+    erase = false;
+    eraseText(0x20, 250);
+  }
+  int numByte = words.length()+1;
+  unsigned char textString[numByte];
+  words.toCharArray(textString,numByte);
+  dwinSerial.write(0x5A); //Header
+   dwinSerial.write(0xA5); //Header
+   dwinSerial.write(strlen(textString) + 4); 
+   dwinSerial.write(0x82);
+   dwinSerial.write(vp_address>>8);
+   dwinSerial.write(vp_address);
+   dwinSerial.write(0x20);
+   dwinSerial.write(textString,strlen(textString));
+
+}
 void displayCredit(int coinEnter){
   credit[6] = highByte(coinEnter);
   credit[7]= lowByte(coinEnter);

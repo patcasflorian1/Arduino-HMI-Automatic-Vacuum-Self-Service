@@ -1,6 +1,4 @@
 void displayProgram(int selectProg){
-
-
   switch (selectProg){
     case 1:{
       displayLcd(0,0,"Program : Aspirare ");
@@ -32,18 +30,34 @@ void displayHmiProgram(int selectProg){
     case 1:{
       switchPage(1);
       displayTimeVaccum(coin,minuteRamase,secundeRamase);
+      if(erase == true){
+       printf_dwin(0x2000,"ASPIRARE     ");
+
+      // printf_dwin(0x2100,"RE");
+      }
     } break;
     case 2:{
-      switchPage(2);
+      switchPage(1);
      displayTimeParfum(coin,minuteRamase,secundeRamase);
+     if(erase == true){
+     printf_dwin(0x2000,"PARFUM       ");
+     }
     } break;
     case 3:{
-      switchPage(3);
+      switchPage(1);
       displayTimeNegruCauciuc(coin,minuteRamase,secundeRamase);
+      if(erase == true){
+      printf_dwin(0x2000,"NEGRU CAUCIUC");
+      //printf_dwin(0x2100,"CAUCIUC");
+      }
     } break;
     case 4:{
-      switchPage(4);
+      switchPage(1);
      displayTimeAir(coin,minuteRamase,secundeRamase);
+     if(erase == true){
+     printf_dwin(0x2000,"AER COMPRIMAT");
+    // printf_dwin(0x2100,"MPRIMAT");
+     }
     } break;
   }
 }
@@ -71,7 +85,9 @@ elapsedMillis timeContor; //declare global if you don't want it reset every time
      displayLcd(8,0,String(coin));
       displayLcd(11,0,"Jet");
      displayLcd(0,1,"Alegeti Program");
+     if(keyChanged==true){
     pcf8574Run();
+     }
     switch(keyPinOut){
     case 1:{
       lcd.clear();
@@ -101,30 +117,31 @@ elapsedMillis timeContor; //declare global if you don't want it reset every time
     ledDriverRunVaccum();
     displayProgram(programSelector);
     displayHmiProgram(programSelector);
+     if(keyChanged==true){
    pcf8574Run();
-   
+     }
   switch(keyPinOut){
     case 1:{
       lcd.clear();
-      Serial.print("keyPinOut "); Serial.println(keyPinOut);   
+      Serial.print("keyPinOut1 "); Serial.println(keyPinOut);   
        startProgram(timeCoin1,programSelector,0);
        
     }break;
     case 2:{  
       lcd.clear();   
-       Serial.print("keyPinOut "); Serial.println(keyPinOut);  
+       Serial.print("keyPinOut2 "); Serial.println(keyPinOut);  
        startProgram(timeCoin2,programSelector,3);
       
     }break;
     case 3:{  
       lcd.clear(); 
-      Serial.print("keyPinOut "); Serial.println(keyPinOut);
+      Serial.print("keyPinOut3 "); Serial.println(keyPinOut);
        startProgram(timeCoin3,programSelector,2); 
          
     }break;
     case 4:{ 
       lcd.clear();    
-      Serial.print("keyPinOut "); Serial.println(keyPinOut); 
+      Serial.print("keyPinOut4 "); Serial.println(keyPinOut); 
        startProgram(timeCoin4,programSelector,1); 
        
     }break;
@@ -153,7 +170,6 @@ elapsedMillis timeContor; //declare global if you don't want it reset every time
       digitalWrite(inhibitCoin,LOW);
       lcd.clear();
        for(int i = 0 ; i<4 ; i ++){
-    pinMode(pinReel[i],OUTPUT);
     digitalWrite(pinReel[i],LOW);
     delay(15);
   }

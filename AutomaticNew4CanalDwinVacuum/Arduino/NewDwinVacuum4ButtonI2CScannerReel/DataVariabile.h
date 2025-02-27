@@ -7,8 +7,9 @@
 #include "HardwareSerial.h"
 
 const byte rxPin = 0; //rx
-const byte txPin = 1; // 1 tx
+const byte txPin = 13; // 1 tx
 SoftwareSerial dwinSerial(rxPin,txPin);
+bool erase = false;
 //Hmi Variabile
 #define DGUS_BAUD     115200
  unsigned char   pretAspirat[8] = {0x5A, 0xA5, 0x05, 0x82, 0x50 , 0x00, 0x00, 0x00};
@@ -86,7 +87,7 @@ PCF8574 ledDriver(0x38); //38 ;21
 
 void startSetup(){
 
- //Serial.begin(9600);
+ Serial.begin(9600);
  dwinSerial.begin(115200);
   Wire.begin(); // Wire communication begin 
   for(int i=0;i<3;i++){
@@ -102,7 +103,7 @@ void startSetup(){
   pinMode(inhibitCoin, OUTPUT);
   digitalWrite(coinPin,HIGH);
   digitalWrite(inhibitCoin,LOW);
-  timeCoin1 = EEPROM.get(timeCoins1,timeCoin1);
+timeCoin1 = EEPROM.get(timeCoins1,timeCoin1);
 timeCoin2 = EEPROM.get(timeCoins2,timeCoin2);
 timeCoin3 = EEPROM.get(timeCoins3,timeCoin3);
 timeCoin4 = EEPROM.get(timeCoins4,timeCoin4);
