@@ -109,8 +109,6 @@ void startProgram(int priceCoin,int selectProgram,int selectReel){
         programSelector = keyPinOut;
         keyPinOut = 0;
         digitalWrite(inhibitCoin,HIGH);
-        erase = true;
-       
         //Serial.print(" programSelector "); Serial.println(programSelector);
   }
 //__end void startProgram 

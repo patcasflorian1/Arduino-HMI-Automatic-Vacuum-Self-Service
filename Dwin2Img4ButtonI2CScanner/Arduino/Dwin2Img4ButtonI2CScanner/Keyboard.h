@@ -1,27 +1,49 @@
+#ifndef KEYBOARD_H
+#define KEYBOARD_H
 
- void pcf8574InitKeyboard(){
-  // pinMode(ARDUINO_UNO_INTERRUPTED_PIN, INPUT_PULLUP);
- // attachInterrupt(digitalPinToInterrupt(ARDUINO_UNO_INTERRUPTED_PIN), keyChangedOnPCF8574, FALLING);
-   //pcf8574.begin();
-  pcf8574.pinMode(0, INPUT);
-  pcf8574.pinMode(1, INPUT);
-  pcf8574.pinMode(2, INPUT);
-  pcf8574.pinMode(3, INPUT);
-  Serial.print("Init pcf8574...");
-  if (pcf8574.begin()){
-    Serial.println("OK-Keyboard");
-  }else{
-    Serial.println("KO-Key");
+// Constante
+//const int ARDUINO_UNO_INTERRUPTED_PIN = 2;
+const int NUM_BUTTONS = 4;
+
+const uint8_t BUTTON_PINS[] = {0, 1, 2, 3};
+const unsigned long KEYBOARD_READ_DELAY = 5; // Delay mic pentru citire stabilă
+const unsigned long KEYBOARD_DEBOUNCE_TIME = 250; // Timp de debounce pentru butoane
+const uint8_t WAIT_LOOPS = 10; // Număr de bucle pentru întârziere
+
+// Variabile
+
+bool buttonStates[NUM_BUTTONS] = {false};
+bool lastButtonStates[NUM_BUTTONS] = {false};
+bool buttonProcessed[NUM_BUTTONS] = {false};
+int keyboardPin[NUM_BUTTONS] = {0};
+
+unsigned long lastKeyboardRead = 0;
+elapsedMillis buttonDebounceTimer[NUM_BUTTONS] = {0};
+
+
+void pcf8574InitKeyboard() {
+  pcf8574.begin();
+   digitalWrite(ARDUINO_UNO_INTERRUPTED_PIN,HIGH);
+  for (int i = 0; i < NUM_BUTTONS; i++) {
+    pcf8574.pinMode(BUTTON_PINS[i], INPUT);
+    pcf8574.digitalWrite(BUTTON_PINS[i], HIGH);
+    buttonDebounceTimer[i] = 0;
   }
   
- }
+  if (pcf8574.begin()) {
+    Serial.println("OK-Keyboard");
+  } else {
+    Serial.println("KO-Key");
+  }
+}
+
+
 void pcf8574Run(){
   timeKeypadElapse = 0;
- //Serial.print("keyChanged "); Serial.println(keyChanged);
- 
+// Serial.print("keyChanged "); Serial.println(keyChanged);
     for(int i =0; i<4;i++){
  keyboardPin[i] = pcf8574.digitalRead(i);
- delay(2);
+ delay(10);
  // Serial.print("keyPinOut "); Serial.print(i);Serial.print(" = ");  Serial.println(keyboardPin[i]);
   }
   wdt_reset();
@@ -43,7 +65,9 @@ void pcf8574Run(){
        erase = true;
     } 
    keyChanged = false; 
-   
+   digitalWrite(ARDUINO_UNO_INTERRUPTED_PIN,HIGH);
    //Serial.print("keyPinOut= ");  Serial.println(keyPinOut);
  }
 
+
+#endif // KEYBOARD_H

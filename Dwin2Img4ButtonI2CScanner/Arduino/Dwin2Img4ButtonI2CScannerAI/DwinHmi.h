@@ -12,10 +12,10 @@ for(int i = 0;i<textLength;i ++){
 }
 void printf_dwin(uint16_t vp_address,String words)
 {
-  //Serial.print("erase ");Serial.println(erase);
+  Serial.print("erase ");Serial.println(erase);
   if(erase == true){
     erase = false;
-    eraseText(0x20, 250);
+    //eraseText(0x20, 250);
   }
   int numByte = words.length()+1;
   unsigned char textString[numByte];

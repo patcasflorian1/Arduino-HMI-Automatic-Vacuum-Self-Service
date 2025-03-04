@@ -37,73 +37,67 @@ elapsedMillis timeContor; //declare global if you don't want it reset every time
   if(coin == 0){
     return;
   }
-  keyChanged = false;
    while(isOk == false){
    wdt_reset();
    ledDriverRunVaccum();
-   // if(keyChanged==true){
+    if(keyChanged==true){
     pcf8574Run();
     
- // }
-//Serial.print("keyPinOut "); Serial.println(keyPinOut);
+    }
+
     switch(keyPinOut){
     case 1:{
       switchPage(1);
        startProgram(timeCoin1,programSelector,0);
-       displayHmiProgram(programSelector);
        isOk = true;   
     }break;
     case 2:{   
       switchPage(1);  
        startProgram(timeCoin2,programSelector,3);
-       displayHmiProgram(programSelector);
        isOk = true;  
     }break;
     case 3:{ 
       switchPage(1);   
        startProgram(timeCoin3,programSelector,2);
-       displayHmiProgram(programSelector);
        isOk = true;   
     }break;
     case 4:{   
     switchPage(1);
        startProgram(timeCoin4,programSelector,1);
-       displayHmiProgram(programSelector);
        isOk = true;  
     }break;
-    
   }
-  // displayHmiProgram(programSelector);
+  
   displayCredit(coin);
    }
   while(isOk == true){
     wdt_reset();
     ledDriverRunVaccum();
-   //Serial.print("keyPinOut2 "); Serial.println(keyPinOut);
-   // if(keyChanged==true){
+    displayHmiProgram(programSelector);
+     if(keyChanged==true){
    pcf8574Run();
-    //}
+     }
     switch(keyPinOut){
     case 1:{        
-       // displayHmiProgram(keyPinOut);
+        displayHmiProgram(keyPinOut);
     startProgram(timeCoin1,programSelector,0);
-      keyChanged = false;
+      
     }break;
     case 2:{        
         displayHmiProgram(keyPinOut);
       startProgram(timeCoin2,programSelector,3);
-        keyChanged = false;     
+             
     }break;
     case 3:{     
-    displayHmiProgram(keyPinOut);       
+       displayHmiProgram(keyPinOut);       
       startProgram(timeCoin3,programSelector,2);
-        keyChanged = false;
+        
     }break;
     case 4:{ 
        
        displayHmiProgram(keyPinOut);      
         startProgram(timeCoin4,programSelector,1);
-         keyChanged = false;
+         
     }break;
   }
     if(timeContor>interval){
@@ -123,20 +117,16 @@ elapsedMillis timeContor; //declare global if you don't want it reset every time
    }
     if(totalTimeCoin <=0 ){
        displayTimeHmi(0,0);
-       eraseText(0x20, 250);
       switchPage(0);
       isOk = false;
       totalTimeCoin = 0;
       timeContor =0;
       programSelector=0;
-      keyChanged=false;
-      keyPinOut = 0;
       digitalWrite(inhibitCoin,LOW);
        for(int i = 0 ; i<4 ; i ++){
     digitalWrite(pinReel[i],LOW);
     delay(15);
   }
- 
       }
     }
  }

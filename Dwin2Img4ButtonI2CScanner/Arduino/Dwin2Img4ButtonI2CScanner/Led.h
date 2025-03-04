@@ -1,5 +1,9 @@
 #include "Arduino.h"
 #include <elapsedMillis.h> 
+// Constante
+const uint8_t PCF8574_LED_ADDRESS = 0x38;
+const int NUM_LEDS = 4;
+const unsigned long LED_BLINK_INTERVAL = 400;
 
  void ledDriverInit(){
 // Set pinMode to OUTPUT
@@ -19,27 +23,38 @@ delay(1);
  }
 
  void ledDriverRun(){
-  int ledState = 0;
- // int intervalBlink =1000;
-wdt_reset();
-     for(int i=0; i<4;i++){ 
-       while(ledState == 0){
-      
-        if((timeElapsedLed>=interval)&&(ledState == 0)){
-    ledState = 1;
-      ledDriver.digitalWrite(led[i], HIGH); //delay(400);
-      timeElapsedLed=0;
-     }
+ static uint8_t ledState = 0;
+  static uint8_t currentLed = 0;
+  static uint8_t direction = 1;  // 1 pentru dreapta, 0 pentru stânga
+  
+  wdt_reset();
+  
+  if (timeElapsedLed >= LED_BLINK_INTERVAL) {
+    // Stingem toate LED-urile
+    for (int i = 0; i < NUM_LEDS; i++) {
+      ledDriver.digitalWrite(led[i], HIGH);
     }
-    while(ledState == 1){
-      wdt_reset();
-      if ((timeElapsedLed>= interval)&&(ledState == 1)) {
-      ledState = 0;
-      ledDriver.digitalWrite(led[i], LOW); //delay(400);
-      timeElapsedLed=0;
+    
+    // Aprindem LED-ul curent
+    ledDriver.digitalWrite(led[currentLed], LOW);
+    
+    // Actualizăm poziția următorului LED
+    if (direction) {
+      currentLed++;
+      if (currentLed >= NUM_LEDS) {
+        currentLed = NUM_LEDS - 1;
+        direction = 0;
+      }
+    } else {
+      currentLed--;
+      if (currentLed >= NUM_LEDS) {  // Verificare pentru underflow
+        currentLed = 0;
+        direction = 1;
+      }
     }
-    }
-  }  
+    
+    timeElapsedLed = 0;
+  }
  }
 
  void ledDriverRunVaccum(){

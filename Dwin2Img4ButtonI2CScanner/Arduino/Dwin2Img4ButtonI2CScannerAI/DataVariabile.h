@@ -46,7 +46,7 @@ int limitCoin = 50;
  int ledState = 0;
  int ledCount=0;
 //Keyboard
-int keyPinOut = 0;
+int keyPinOut = 0 ;
 String unitDisplay = "Jeton";
 // constants won't change:
 int led[4]={0,1,2,3};
@@ -56,6 +56,7 @@ bool switchLed = true;
 bool switchDisplay = true;
 int programSelector = 0;
 int meniuButton[3] = {5,6,7}; // Meniu,Set, Conta
+int keyboardPin[4];
 int  pinReel[] = {12,11,10,9}; //(asp,aerComp,negruCauciuc,Parf)
 int timeCoin1 = 0,timeCoin2 = 0,timeCoin3 = 0,timeCoin4 = 0,totalCoin=0;
 long totalTimeCoin = 0;
@@ -65,32 +66,25 @@ float newCoin = 0;
 float newTimeCoin = 0; 
 // rezervare zone de memorie in eeprom
 int totalCoins = 100,timeCoins1 = 110,timeCoins2 = 120,timeCoins3 = 140,timeCoins4 = 160;
-const uint8_t PCF8574_KEYBOARD_ADDRESS = 0x39;
 //For arduino uno only pin 1 and 2 are interrupted
 const int ARDUINO_UNO_INTERRUPTED_PIN = 2;
-// Declarație forward pentru handler-ul de întrerupere
-void keyChangedOnPCF8574();
-
-// Instanță PCF8574
-PCF8574 pcf8574(PCF8574_KEYBOARD_ADDRESS, ARDUINO_UNO_INTERRUPTED_PIN, keyChangedOnPCF8574);
-
-void keyChangedOnPCF8574() {
-  keyChanged = true;
+// Function interrupt
+ void keyChangedOnPCF8574(){
+ // Interrupt called (No Serial no read no wire in this function, and DEBUG disabled on PCF library)
+   keyChanged = true;
 }
-
+// Set i2c address
+PCF8574 pcf8574(0x39, ARDUINO_UNO_INTERRUPTED_PIN, keyChangedOnPCF8574);
 // Set i2c address
 PCF8574 ledDriver(0x38); //38 ;21
 
 
 void startSetup(){
 
- //Serial.begin(9600);
+Serial.begin(9600);
  dwinSerial.begin(115200);
   Wire.begin(); // Wire communication begin 
    keyPinOut = 0;
-   pinMode(ARDUINO_UNO_INTERRUPTED_PIN,INPUT);
-  digitalWrite(ARDUINO_UNO_INTERRUPTED_PIN,HIGH);
-   attachInterrupt(digitalPinToInterrupt(ARDUINO_UNO_INTERRUPTED_PIN), keyChangedOnPCF8574, FALLING);
   for(int i=0;i<3;i++){
     pinMode(meniuButton[i], INPUT_PULLUP);
     delay(50);

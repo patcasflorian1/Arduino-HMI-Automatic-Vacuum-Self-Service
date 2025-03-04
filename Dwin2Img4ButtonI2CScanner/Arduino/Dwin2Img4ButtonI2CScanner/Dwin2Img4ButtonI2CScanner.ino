@@ -15,7 +15,7 @@ void setup() {
   setupLcd();
   startSetup();
   displayLcd1(0,0,"WashCleanForRl");
-  displayLcd1(0,1,"Sn02B4-02/25 ");
+  displayLcd1(0,1,"Sn01B4-02/25 ");
   delay(3000); 
   lcd1.clear();
   attachInterrupt(digitalPinToInterrupt(3), coinInterrupt, LOW);
@@ -24,6 +24,7 @@ void setup() {
   wdt_enable(WDTO_8S);
  Serial.println("Resetează!");
  switchPage(0);
+ eraseText(0x20, 250);
   Serial.print("keyChanged "); Serial.println(keyChanged);
   displayPriceAspirat(1,timeCoin1/60,timeCoin1%60);
  displayPriceParfum(1,timeCoin2/60,timeCoin2%60);
@@ -35,8 +36,9 @@ void setup() {
 }
 
 void loop() {
- 
+
    wdt_reset();
+   /*
 if((timeElapsedLed>=interval)&&(ledState == 0)){
     ledState = 1;
       ledDriver.digitalWrite(led[ledCount], HIGH); 
@@ -55,7 +57,8 @@ if((timeElapsedLed>=interval)&&(ledState == 0)){
    if(ledCount>3){
     ledCount = 0;
   }  
-  // ledDriverRun();
+  */
+   ledDriverRun();
     //activare meniu reglaje
   if (digitalRead(meniuButton[0]) == LOW)
   {
