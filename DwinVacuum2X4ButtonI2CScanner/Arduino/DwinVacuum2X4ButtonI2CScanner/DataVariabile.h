@@ -7,7 +7,7 @@
 #include "HardwareSerial.h"
 
 const byte rxPin = 0; //rx
-const byte txPin = 1; // 13 tx
+const byte txPin = 13; // 13 tx
 SoftwareSerial dwinSerial(rxPin,txPin);
 bool erase = false;
 //Hmi Variabile
@@ -44,6 +44,7 @@ elapsedMillis timeElapsedLed; //declare global if you don't want it reset every 
 elapsedMillis timeCoinElapse; //declare global if you don't want it reset every time loop runs
 elapsedMillis timeDisplayElapse; //declare global if you don't want it reset every time loop runs
 elapsedMillis timeKeypadElapse; //declare global if you don't want it reset every time loop runs
+
 volatile int coinPin = 3;
 volatile int coin = 0 ;
 int oldCoin = 0;
@@ -56,7 +57,7 @@ int keyPinOut = 0 ;
 int keyPinOutSt2 = 0 ;
 String unitDisplay = "Jeton";
 // constants won't change:
-int led[4]={0,1,2,3};
+int led[8]={0,1,2,3,4,5,6,7};
 const long interval = 400;
 bool keyChanged = false;
 bool switchLed = true;
@@ -65,7 +66,7 @@ int programSelector = 0;
 int programSelectorSt2 = 0;
 int meniuButton[3] = {5,6,7}; // Meniu,Set, Conta
 int keyboardPin[8];
-int  pinReel[] = {12,11,10,9,A0,A1,A2,A3}; //(asp,aerComp,negruCauciuc,Parf),(asp2,aerComp2,negruCauciuc2,Parf2)
+int  pinReel[] = {9,10,11,12,A0,A1,A2,A3}; //(asp,aerComp,negruCauciuc,Parf),(asp2,aerComp2,negruCauciuc2,Parf2)
 int timeCoin1 = 0,timeCoin2 = 0,timeCoin3 = 0,timeCoin4 = 0,totalCoin=0;
 //St1
 long totalTimeCoin = 0;
@@ -95,18 +96,26 @@ PCF8574 ledDriver(0x38); //38 ;21
 
 void startSetup(){
  Wire.begin(); // Wire communication begin 
- //Serial.begin(9600);
+//Serial.begin(9600);
  dwinSerial.begin(115200);
  keyPinOut = 0;
  keyPinOutSt2 = 0;
+  pinMode(ARDUINO_UNO_INTERRUPTED_PIN,INPUT);
+  digitalWrite(ARDUINO_UNO_INTERRUPTED_PIN,HIGH);
+   attachInterrupt(digitalPinToInterrupt(ARDUINO_UNO_INTERRUPTED_PIN), keyChangedOnPCF8574, FALLING);
   for(int i=0;i<3;i++){
     pinMode(meniuButton[i], INPUT_PULLUP);
     delay(50);
   }
   for(int i = 0 ; i<8 ; i ++){
     pinMode(pinReel[i],OUTPUT);
-    digitalWrite(pinReel[i],LOW);
-    delay(15);
+    if(i<4){
+digitalWrite(pinReel[i],HIGH);
+    }else{
+digitalWrite(pinReel[i],LOW);
+    }
+    
+    delay(35);
   }
   pinMode(coinPin, INPUT);
   pinMode(inhibitCoin, OUTPUT);

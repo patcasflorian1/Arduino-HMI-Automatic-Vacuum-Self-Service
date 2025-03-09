@@ -1,0 +1,119 @@
+#include <avr/wdt.h>
+#include "VariabileData.h"
+#include "DwinHmi.h"
+#include "Display.h"
+#include "Service.h"
+#include "Coin.h"
+#include "Keyboard.h"
+#include "Led.h"
+#include "Scanner.h"
+#include "Contabilitate.h"
+#include "SetTimeCoin.h"
+#include "Meniu.h"
+#include "FunctionSt1.h"
+#include "FunctionSt2.h"
+#include "Vacuum.h"
+
+void setup() {
+ //Serial.begin(9600); 
+dwinSerial.begin(DGUS_BAUD);
+  Wire.begin();
+ // Wire.setClock(400000L);
+  reelDriverInit();
+  buttonInit();
+  pinMode(coinPin, INPUT);
+  pinMode(inhibitCoin, OUTPUT);
+  //Set val Pin Arduino nano
+ digitalWrite(coinPin,HIGH);
+  digitalWrite(inhibitCoin,LOW);
+  pcf8574InitKeyboard();
+  ledDriverInit();
+  attachInterrupt(digitalPinToInterrupt(3), coinInterrupt, LOW); //SetCoinPin
+//set LCD instance
+ switchPage(0);
+   lcd1.begin(16, 2);
+  lcd1.setBacklight(HIGH); 
+  lcd1.setCursor(0, 0);
+  lcd1.print("2KbSerialWithScannerV1");
+  delay(2000); 
+  lcd1.clear();
+ 
+ displayCredit(coin);
+     for(int i=0;i<4;i++){
+    pinMode(pinReel[i],OUTPUT);
+    digitalWrite(pinReel[i],HIGH);
+ 
+  }
+  pinMode(ARDUINO_UNO_INTERRUPTED_PIN,INPUT);
+  digitalWrite(ARDUINO_UNO_INTERRUPTED_PIN,HIGH);
+   attachInterrupt(digitalPinToInterrupt(ARDUINO_UNO_INTERRUPTED_PIN), keyChangedOnPCF8574, FALLING);
+     wdt_enable(WDTO_4S);
+ Serial.println("Resetează!");
+ //Extract from memory price of coin
+   timeCoin1 =  EEPROM.get(timeCoinsEeprom1,timeCoin1);
+   timeCoin2 = EEPROM.get(timeCoinsEeprom2,timeCoin2);
+   timeCoin3 = EEPROM.get(timeCoinsEeprom3,timeCoin3);
+   timeCoin4 = EEPROM.get(timeCoinsEeprom4,timeCoin4);
+    displayPriceAspirat(1,timeCoin1/60,timeCoin1%60);
+ displayPriceParfum(1,timeCoin2/60,timeCoin2%60);
+ displayPriceNegruCauciuc(1,timeCoin3/60,timeCoin3%60);
+ displayPriceAerComp(1,timeCoin4/60,timeCoin4%60);
+ 
+}
+
+void loop() {
+ wdt_reset();
+      for(int i=0; i<4;i++){ 
+       while(ledState == 0){
+       wdt_reset();
+        if((timeElapsedLed>=interval)&&(ledState == 0)){
+    ledState = 1;
+      ledDriver.digitalWrite(P[i], HIGH); //delay(400);
+      ledDriver.digitalWrite(P[i+4], HIGH); //delay(400);
+      timeElapsedLed=0;
+     }
+    }
+    while(ledState == 1){
+       wdt_reset();
+      if ((timeElapsedLed>= interval)&&(ledState == 1)) {
+      ledState = 0;
+      ledDriver.digitalWrite(P[i], LOW); //delay(400);
+      ledDriver.digitalWrite(P[i+4], LOW); //delay(400);
+      timeElapsedLed=0;
+    }
+    }
+  } 
+
+if(coin>0){
+  Serial.print("Coin ");Serial.println(coin);
+  //start program ReelComand
+  switchPage(1);
+vacuumCleaner();
+}
+
+  //activare meniu reglaje
+  if (digitalRead(meniuButton[0]) ==LOW)
+  {
+
+  meniuprog();
+  }
+  if(digitalRead(meniuButton[2]) ==LOW){
+     
+     
+      setConta(totalCoin,totalCoins,inhibitCoin);
+  }
+
+  //Afisare lcd Secundar
+lcd1.setCursor(0, 0);
+  lcd1.print("Vacuum4X2Functii");
+  lcd1.setCursor(0, 1);
+  lcd1.print("SN01.01.24SetMen");
+  
+  // Afisare Lista Preturi
+
+
+   
+}
+
+
+

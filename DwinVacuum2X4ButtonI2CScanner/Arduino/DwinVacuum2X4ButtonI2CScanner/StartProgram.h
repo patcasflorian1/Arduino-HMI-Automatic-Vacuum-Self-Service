@@ -84,6 +84,7 @@ elapsedMillis timeContor; //declare global if you don't want it reset every time
 elapsedMillis timeContorSt2; //declare global if you don't want it reset every time loop runs
    unsigned int interval = 1000;
  programSelector = 0;
+ programSelectorSt2 = 0;
   if(coin == 0){
     return;
   }
@@ -118,6 +119,7 @@ elapsedMillis timeContorSt2; //declare global if you don't want it reset every t
    
      if(keyChanged==true){
     pcf8574Run();
+    pcf8574RunSt2();
     oldCoin = 0;
     displayCredit(oldCoin);
      }
@@ -233,8 +235,8 @@ elapsedMillis timeContorSt2; //declare global if you don't want it reset every t
   }
   }
    if(keyChanged==true){
-    pcf8574Run();
-    
+   pcf8574Run();
+   pcf8574RunSt2();
      }
   //St1
   if(totalTimeCoin > 0){
@@ -261,7 +263,7 @@ elapsedMillis timeContorSt2; //declare global if you don't want it reset every t
       programSelector=0;
       digitalWrite(inhibitCoin,LOW);
        for(int i = 0 ; i<4 ; i ++){
-    digitalWrite(pinReel[i],LOW);
+    digitalWrite(pinReel[i],HIGH);
     delay(15);
   }
       }

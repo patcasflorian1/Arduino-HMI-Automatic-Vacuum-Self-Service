@@ -7,7 +7,7 @@
 #include "HardwareSerial.h"
 
 const byte rxPin = 0; //rx
-const byte txPin = 13; // 1 tx
+const byte txPin = 1; // 1 tx
 SoftwareSerial dwinSerial(rxPin,txPin);
 bool erase = false;
 //Hmi Variabile

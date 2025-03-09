@@ -85,7 +85,7 @@ elapsedMillis timeContor; //declare global if you don't want it reset every time
     //}
     switch(keyPinOut){
     case 1:{        
-       // displayHmiProgram(keyPinOut);
+        displayHmiProgram(keyPinOut);
     startProgram(timeCoin1,programSelector,0);
       keyChanged = false;
     }break;

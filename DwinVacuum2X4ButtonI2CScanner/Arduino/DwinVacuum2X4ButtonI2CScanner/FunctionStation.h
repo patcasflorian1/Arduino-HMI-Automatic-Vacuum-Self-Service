@@ -1,7 +1,8 @@
 
 elapsedMillis timeElapsedSt1Reel; //declare global if you don't want it reset every time loop runs
-unsigned int intervalSt1Reel = 95;
-unsigned int timeDelay = 500;
+elapsedMillis timeElapsedSt2Reel; //declare global if you don't want it reset every time loop runs
+unsigned int intervalSt1Reel = 195;
+unsigned int timeDelay = 300;
 
 //Set time-price for startProgram
 void startProgram(int priceCoin,int selectProgram,int selectReel){
@@ -9,7 +10,7 @@ void startProgram(int priceCoin,int selectProgram,int selectReel){
       if((coin>0)||(totalTimeCoin>0)){
       while(i < 4){
       if(timeElapsedSt1Reel >= intervalSt1Reel){
-       digitalWrite(pinReel[i],LOW);
+       digitalWrite(pinReel[i],HIGH);
         i++;
         timeElapsedSt1Reel = 0;
       }
@@ -17,7 +18,7 @@ void startProgram(int priceCoin,int selectProgram,int selectReel){
         bool reelState = true;
       while(reelState ==true){
       if(timeElapsedSt1Reel>=timeDelay){
-         digitalWrite(pinReel[selectReel],HIGH);
+         digitalWrite(pinReel[selectReel],LOW);
         reelState = false;
         timeElapsedSt1Reel = 0;
       }
@@ -114,16 +115,16 @@ void startProgramSt2(int priceCoin,int selectProgramSt2,int selectReel){
      int i = 4; 
      if((coin>0)||(totalTimeCoinSt2>0)){   
       while(i < 8){
-      if(timeElapsedSt1Reel >= intervalSt1Reel){
+      if(timeElapsedSt2Reel >= intervalSt1Reel){
        digitalWrite(pinReel[i],LOW);
         i++;
-        timeElapsedSt1Reel = 0;
+        timeElapsedSt2Reel = 0;
       }
       }
       
         bool reelState = true;
       while(reelState ==true){
-      if(timeElapsedSt1Reel>=timeDelay){
+      if(timeElapsedSt2Reel>=timeDelay){
          digitalWrite(pinReel[selectReel],HIGH);
         reelState = false;
         timeElapsedSt1Reel = 0;

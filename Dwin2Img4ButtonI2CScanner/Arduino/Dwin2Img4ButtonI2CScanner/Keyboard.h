@@ -41,11 +41,13 @@ void pcf8574InitKeyboard() {
 void pcf8574Run(){
   timeKeypadElapse = 0;
 // Serial.print("keyChanged "); Serial.println(keyChanged);
+if(keyChanged){
     for(int i =0; i<4;i++){
  keyboardPin[i] = pcf8574.digitalRead(i);
  delay(10);
  // Serial.print("keyPinOut "); Serial.print(i);Serial.print(" = ");  Serial.println(keyboardPin[i]);
   }
+}
   wdt_reset();
   //Keyboard for st1
   if((keyboardPin[0]==0)&&(programSelector != 1)){ 
