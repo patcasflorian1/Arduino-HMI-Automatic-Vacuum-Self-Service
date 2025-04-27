@@ -1,5 +1,6 @@
 #include "Arduino.h"
 #include "HardwareSerial.h"
+#include "CommonFunctions.h"
 elapsedMillis timeElapsedSt1Reel; //declare global if you don't want it reset every time loop runs
 unsigned int intervalSt1Reel = 15;
 unsigned int timeDelay = 2000;
@@ -37,6 +38,7 @@ void aspirator(){
           EEPROM.put(totalCoins,totalCoin);
          isOk1=true;
             totalTimeCoin = coin*timeCoin1;
+           totalTimeCoin = validateTimeValue(totalTimeCoin); // Validare după actualizare
      minuteRamase = (coin*timeCoin1)/60;
      secundeRamase =((coin*timeCoin1)%60);
      coin = 0;    
@@ -47,6 +49,7 @@ void aspirator(){
          case 2 :{
             newCoin = ((float)totalTimeCoin/(float)timeCoin2);
        totalTimeCoin =  newCoin* timeCoin1;
+        totalTimeCoin = validateTimeValue(totalTimeCoin); // Validare după actualizare
      minuteRamase = totalTimeCoin/60;
      secundeRamase =totalTimeCoin%60;
       programSelector=1;
@@ -56,6 +59,7 @@ void aspirator(){
       case 3 :{
             newCoin = ((float)totalTimeCoin/(float)timeCoin3);
        totalTimeCoin =  newCoin* timeCoin1;
+        totalTimeCoin = validateTimeValue(totalTimeCoin); // Validare după actualizare
      minuteRamase = totalTimeCoin/60;
      secundeRamase =totalTimeCoin%60;
       programSelector=1;
@@ -65,6 +69,7 @@ void aspirator(){
         case 4 :{
             newCoin = ((float)totalTimeCoin/(float)timeCoin4);
        totalTimeCoin =  newCoin* timeCoin1;
+        totalTimeCoin = validateTimeValue(totalTimeCoin); // Validare după actualizare
      minuteRamase = totalTimeCoin/60;
      secundeRamase =totalTimeCoin%60;
       programSelector=1;
@@ -107,6 +112,7 @@ void aspirator(){
           EEPROM.put(totalCoins,totalCoin);
          isOk1=true;
             totalTimeCoin = coin*timeCoin2;
+             totalTimeCoin = validateTimeValue(totalTimeCoin); // Validare după actualizare
      minuteRamase = (coin*timeCoin2)/60;
      secundeRamase =((coin*timeCoin2)%60);
      coin = 0;
@@ -118,6 +124,7 @@ void aspirator(){
          case 1 :{
             newCoin = ((float)totalTimeCoin/(float)timeCoin1);
        totalTimeCoin =  newCoin* timeCoin2;
+        totalTimeCoin = validateTimeValue(totalTimeCoin); // Validare după actualizare
      minuteRamase = totalTimeCoin/60;
      secundeRamase =totalTimeCoin%60;
       programSelector=2;
@@ -127,6 +134,7 @@ void aspirator(){
       case 3 :{
             newCoin = ((float)totalTimeCoin/(float)timeCoin3);
        totalTimeCoin =  newCoin* timeCoin2;
+        totalTimeCoin = validateTimeValue(totalTimeCoin); // Validare după actualizare
      minuteRamase = totalTimeCoin/60;
      secundeRamase =totalTimeCoin%60;
       programSelector=2;
@@ -137,6 +145,7 @@ void aspirator(){
         case 4 :{
             newCoin = ((float)totalTimeCoin/(float)timeCoin4);
        totalTimeCoin =  newCoin* timeCoin2;
+        totalTimeCoin = validateTimeValue(totalTimeCoin); // Validare după actualizare
      minuteRamase = totalTimeCoin/60;
      secundeRamase =totalTimeCoin%60;
       programSelector=2;
@@ -181,6 +190,7 @@ void aspirator(){
           EEPROM.put(totalCoins,totalCoin);
          isOk1=true;
             totalTimeCoin = coin*timeCoin3;
+             totalTimeCoin = validateTimeValue(totalTimeCoin); // Validare după actualizare
      minuteRamase = (coin*timeCoin3)/60;
      secundeRamase =((coin*timeCoin3)%60);
      coin = 0;     
@@ -191,6 +201,7 @@ void aspirator(){
          case 1 :{
             newCoin = ((float)totalTimeCoin/(float)timeCoin1);
        totalTimeCoin =  newCoin* timeCoin3;
+        totalTimeCoin = validateTimeValue(totalTimeCoin); // Validare după actualizare
      minuteRamase = totalTimeCoin/60;
      secundeRamase =totalTimeCoin%60;
       programSelector=3;
@@ -202,6 +213,7 @@ void aspirator(){
       case 2 :{
             newCoin = ((float)totalTimeCoin/(float)timeCoin2);
        totalTimeCoin =  newCoin* timeCoin3;
+        totalTimeCoin = validateTimeValue(totalTimeCoin); // Validare după actualizare
      minuteRamase = totalTimeCoin/60;
      secundeRamase =totalTimeCoin%60;
       programSelector=3;
@@ -213,6 +225,7 @@ void aspirator(){
         case 4 :{
             newCoin = ((float)totalTimeCoin/(float)timeCoin4);
        totalTimeCoin =  newCoin* timeCoin3;
+        totalTimeCoin = validateTimeValue(totalTimeCoin); // Validare după actualizare
      minuteRamase = totalTimeCoin/60;
      secundeRamase =totalTimeCoin%60;
       programSelector=3;
@@ -257,6 +270,7 @@ void aspirator(){
           EEPROM.put(totalCoins,totalCoin);
          isOk1=true;
             totalTimeCoin = coin*timeCoin4;
+             totalTimeCoin = validateTimeValue(totalTimeCoin); // Validare după actualizare
      minuteRamase = (coin*timeCoin4)/60;
      secundeRamase =((coin*timeCoin4)%60);
      coin = 0;  
@@ -268,6 +282,7 @@ void aspirator(){
          case 1 :{
             newCoin = ((float)totalTimeCoin/(float)timeCoin1);
        totalTimeCoin =  newCoin* timeCoin4;
+        totalTimeCoin = validateTimeValue(totalTimeCoin); // Validare după actualizare
      minuteRamase = totalTimeCoin/60;
      secundeRamase =totalTimeCoin%60;
       programSelector=4;
@@ -279,6 +294,7 @@ void aspirator(){
       case 2 :{
             newCoin = ((float)totalTimeCoin/(float)timeCoin2);
        totalTimeCoin = newCoin* timeCoin4;
+        totalTimeCoin = validateTimeValue(totalTimeCoin); // Validare după actualizare
      minuteRamase = totalTimeCoin/60;
      secundeRamase =totalTimeCoin%60;
       programSelector=4;
@@ -290,6 +306,7 @@ void aspirator(){
         case 3 :{
            newCoin = ((float)totalTimeCoin/(float)timeCoin3);
        totalTimeCoin = newCoin* timeCoin4;
+        totalTimeCoin = validateTimeValue(totalTimeCoin); // Validare după actualizare
      minuteRamase = totalTimeCoin/60;
      secundeRamase =totalTimeCoin%60;
       programSelector=4;

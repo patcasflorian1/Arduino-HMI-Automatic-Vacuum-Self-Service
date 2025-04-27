@@ -70,10 +70,11 @@ elapsedMillis timeContor; //declare global if you don't want it reset every time
   
   displayCredit(coin);
    }
+    displayHmiProgram(programSelector);
   while(isOk == true){
     wdt_reset();
     ledDriverRunVaccum();
-    displayHmiProgram(programSelector);
+   
      if(keyChanged==true){
    pcf8574Run();
      }

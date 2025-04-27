@@ -5,7 +5,7 @@
   for(int i=0;i<3;i++){
      wdt_reset();
     pinMode(meniuButton[i], INPUT);
-    digitalWrite(meniuButton[i],LOW);
+    digitalWrite(meniuButton[i],HIGH);
     delay(50);
   }
  }

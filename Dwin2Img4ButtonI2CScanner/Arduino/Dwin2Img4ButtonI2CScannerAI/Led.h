@@ -27,6 +27,9 @@ delay(1);
  // int intervalBlink =1000;
 wdt_reset();
      for(int i=0; i<4;i++){ 
+      if(coin > 0){
+        break;
+      }
        while(ledState == 0){
       
         if((timeElapsedLed>=interval)&&(ledState == 0)){

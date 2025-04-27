@@ -119,7 +119,7 @@ bool isValidTime(int time) {
 
 void startSetup() {
     Wire.begin();
-    Serial.begin(9600);
+    //Serial.begin(9600);
     dwinSerial.begin(DGUS_BAUD);
     
     // Inițializare variabile

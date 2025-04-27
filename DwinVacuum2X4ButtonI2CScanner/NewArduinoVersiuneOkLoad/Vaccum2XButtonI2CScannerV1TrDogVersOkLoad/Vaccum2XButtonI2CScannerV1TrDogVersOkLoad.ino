@@ -20,15 +20,15 @@ dwinSerial.begin(DGUS_BAUD);
   Wire.begin();
  // Wire.setClock(400000L);
   reelDriverInit();
-  buttonInit();
+   buttonInit();
   pinMode(coinPin, INPUT);
   pinMode(inhibitCoin, OUTPUT);
   //Set val Pin Arduino nano
- digitalWrite(coinPin,HIGH);
+  digitalWrite(coinPin,HIGH);
   digitalWrite(inhibitCoin,LOW);
   pcf8574InitKeyboard();
-  ledDriverInit();
-  attachInterrupt(digitalPinToInterrupt(3), coinInterrupt, LOW); //SetCoinPin
+ ledDriverInit();
+  attachInterrupt(digitalPinToInterrupt(coinPin), coinInterrupt, LOW); //SetCoinPin
 //set LCD instance
  switchPage(0);
    lcd1.begin(16, 2);
@@ -37,7 +37,7 @@ dwinSerial.begin(DGUS_BAUD);
   lcd1.print("2KbSerialWithScannerV1");
   delay(2000); 
   lcd1.clear();
- 
+
  displayCredit(coin);
      for(int i=0;i<4;i++){
     pinMode(pinReel[i],OUTPUT);
@@ -47,7 +47,7 @@ dwinSerial.begin(DGUS_BAUD);
   pinMode(ARDUINO_UNO_INTERRUPTED_PIN,INPUT);
   digitalWrite(ARDUINO_UNO_INTERRUPTED_PIN,HIGH);
    attachInterrupt(digitalPinToInterrupt(ARDUINO_UNO_INTERRUPTED_PIN), keyChangedOnPCF8574, FALLING);
-     wdt_enable(WDTO_4S);
+    
  Serial.println("Resetează!");
  //Extract from memory price of coin
    timeCoin1 =  EEPROM.get(timeCoinsEeprom1,timeCoin1);
@@ -59,10 +59,18 @@ dwinSerial.begin(DGUS_BAUD);
  displayPriceNegruCauciuc(1,timeCoin3/60,timeCoin3%60);
  displayPriceAerComp(1,timeCoin4/60,timeCoin4%60);
  
+   //Afisare lcd Secundar
+lcd1.setCursor(0, 0);
+  lcd1.print("Vacuum4X2Fun.HMI");
+  lcd1.setCursor(0, 1);
+  lcd1.print("SN01.04.25SetMen");
+ 
+ wdt_enable(WDTO_4S);
 }
 
 void loop() {
  wdt_reset();
+ /*
       for(int i=0; i<4;i++){ 
        while(ledState == 0){
        wdt_reset();
@@ -83,12 +91,18 @@ void loop() {
     }
     }
   } 
-
+  */
+  ledDriverRun();
+//Serial.print("Coin ");Serial.println(coin);
 if(coin>0){
-  Serial.print("Coin ");Serial.println(coin);
+  //Serial.print("Coin ");Serial.println(coin);
   //start program ReelComand
   switchPage(1);
 vacuumCleaner();
+lcd1.setCursor(0, 0);
+  lcd1.print("Vacuum4X2Fun.HMI");
+  lcd1.setCursor(0, 1);
+  lcd1.print("SN01.04.25SetMen");
 }
 
   //activare meniu reglaje
@@ -96,18 +110,22 @@ vacuumCleaner();
   {
 
   meniuprog();
+  lcd1.setCursor(0, 0);
+  lcd1.print("Vacuum4X2Fun.HMI");
+  lcd1.setCursor(0, 1);
+  lcd1.print("SN02.03.25SetMen");
   }
   if(digitalRead(meniuButton[2]) ==LOW){
      
      
       setConta(totalCoin,totalCoins,inhibitCoin);
+      lcd1.setCursor(0, 0);
+  lcd1.print("Vacuum4X2Fun.HMI");
+  lcd1.setCursor(0, 1);
+  lcd1.print("SN01.04.25SetMen");
   }
 
-  //Afisare lcd Secundar
-lcd1.setCursor(0, 0);
-  lcd1.print("Vacuum4X2Functii");
-  lcd1.setCursor(0, 1);
-  lcd1.print("SN01.01.24SetMen");
+
   
   // Afisare Lista Preturi
 

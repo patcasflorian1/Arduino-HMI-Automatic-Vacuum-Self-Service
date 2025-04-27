@@ -7,7 +7,7 @@
 #include "HardwareSerial.h"
 
 const byte rxPin = 0; //rx
-const byte txPin = 1; // 1 tx
+const byte txPin = 13; // 1 tx
 SoftwareSerial dwinSerial(rxPin,txPin);
 bool erase = false;
 //Hmi Variabile
@@ -49,6 +49,7 @@ int limitCoin = 50;
 int keyPinOut = 0;
 String unitDisplay = "Jeton";
 // constants won't change:
+int keyboardPin[4];
 int led[4]={0,1,2,3};
 const long interval = 400;
 bool keyChanged = false;

@@ -81,7 +81,7 @@ PCF8574 ledDriver(0x38); //38 ;21
 
 void startSetup(){
 
-Serial.begin(9600);
+//Serial.begin(9600);
  dwinSerial.begin(115200);
   Wire.begin(); // Wire communication begin 
    keyPinOut = 0;

@@ -14,9 +14,9 @@
 
 // Definim șirurile constante în memoria program
 const char str1[] PROGMEM = "WashCleanForRl";
-const char str2[] PROGMEM = "Sn02B4-02/25 ";
-const char str3[] PROGMEM = "Auto WashClean2B ";
-const char str4[] PROGMEM = "Sn01 Service ";
+const char str2[] PROGMEM = "Sn02B4-01/25 ";
+const char str3[] PROGMEM = "Auto WashClean4B ";
+const char str4[] PROGMEM = "Sn01 ServiceAI";
 
 
 

@@ -1,3 +1,6 @@
+#ifndef VACUUM_H
+#define VACUUM_H
+
 #include "HardwareSerial.h"
 #include "Arduino.h"
 
@@ -84,25 +87,45 @@ elapsedMillis timeElapsed; //declare global if you don't want it reset every tim
   // Set time-price for 
           keyPinOut = 0;
        aspirator();
-          displayCredit(coin);    
+          displayCredit(coin); 
+              if((totalTimeCoin > 3000)||(totalTimeCoin < 0)||(isnan(totalTimeCoin))){
+            totalTimeCoin = 60;
+           }  
+     minuteRamase = totalTimeCoin/60;
+     secundeRamase =totalTimeCoin%60;    
               }break;
       case 2 :{
  //Set time-price for Parfum
           keyPinOut = 0;
      parfum();
      displayCredit(coin);
+      if((totalTimeCoin > 150)||(totalTimeCoin < 0)||(isnan(totalTimeCoin))){
+            totalTimeCoin = 10;
+           }
+    minuteRamase = totalTimeCoin/60;
+     secundeRamase =totalTimeCoin%60;
       }  break; 
       case 3 :{
         //Set time-price for Cauciuc  
 keyPinOut = 0;
       cauciuc(); 
       displayCredit(coin);
+      if((totalTimeCoin > 850)||(totalTimeCoin < 0)||(isnan(totalTimeCoin))){
+            totalTimeCoin = 90;
+           }
+     minuteRamase = totalTimeCoin/60;
+     secundeRamase =totalTimeCoin%60;
       }  break;
       case 4 :{
        //Set time-price for AerComprimat
 keyPinOut = 0;
      aerComprimat();
      displayCredit(coin);
+      if((totalTimeCoin > 4500)||(totalTimeCoin < 0)||(isnan(totalTimeCoin))){
+            totalTimeCoin = 90;
+           }
+     minuteRamase = totalTimeCoin/60;
+     secundeRamase =totalTimeCoin%60;
       }  break;
     }
    
@@ -114,24 +137,44 @@ keyPinOut = 0;
   keyPinOut = 0;
        aspiratorSt2();
        displayCredit(coin);
+       if((totalTimeCoin2 > 3000)||(totalTimeCoin2 < 0)||(isnan(totalTimeCoin2))){
+            totalTimeCoin2 = 60;
+           }  
+    minuteRamase2 = totalTimeCoin2/60;
+    secundeRamase2 =totalTimeCoin2%60;
               }break;
       case 6 :{
  //Set time-price for Parfum
  keyPinOut = 0;
      parfumSt2();
      displayCredit(coin);
+     if((totalTimeCoin2 > 150)||(totalTimeCoin2 < 0)||(isnan(totalTimeCoin2))){
+            totalTimeCoin2 = 10;
+           }
+    minuteRamase2 = totalTimeCoin2/60;
+    secundeRamase2 =totalTimeCoin2%60;
       }  break; 
       case 7 :{
         //Set time-price for Cauciuc
        keyPinOut = 0; 
       cauciucSt2(); 
       displayCredit(coin);
+       if((totalTimeCoin2 > 850)||(totalTimeCoin2 < 0)||(isnan(totalTimeCoin2))){
+            totalTimeCoin2 = 90;
+           }
+     minuteRamase2 = totalTimeCoin2/60;
+    secundeRamase2 =totalTimeCoin2%60;
       }  break;
       case 8 :{
        //Set time-price for AerComprimat
        keyPinOut = 0;
      aerComprimatSt2();
      displayCredit(coin);
+        if((totalTimeCoin2 > 4500)||(totalTimeCoin2 < 0)||(isnan(totalTimeCoin2))){
+            totalTimeCoin2 = 90;
+           }
+    minuteRamase2 = totalTimeCoin2/60;
+    secundeRamase2 =totalTimeCoin2%60;
       }  break;
     }
     
@@ -180,7 +223,7 @@ keyPinOut = 0;
    }
 
 //Timer for St1
-if(programSelector>0)
+if((programSelector>0)&&(isOk1 == true))
 {
 
   if(timeContor>interval){
@@ -192,6 +235,8 @@ if(programSelector>0)
     totalTimeCoin--;
     timeContor =0;
     }
+     if(secundeRamase < 0)
+     secundeRamase = 0;
    displayTimeHmi(minuteRamase,secundeRamase);
     if(totalTimeCoin<=0){
       totalTimeCoin = 0;
@@ -211,7 +256,7 @@ if(programSelector>0)
 //end Timer for St1
 
    //Timer for St2
-  if(programSelector2>0){
+  if((programSelector2>0)&&(isOk2 == true)){
   
  if(timeContor2>interval){
     if((secundeRamase2 <=0)&&(minuteRamase2>0)){
@@ -222,7 +267,9 @@ if(programSelector>0)
     totalTimeCoin2--;
     timeContor2 =0;
     }
-   
+    if(secundeRamase2 < 0)
+     secundeRamase2 = 0;
+    displayTimeHmiSt2(minuteRamase2,secundeRamase2);
     if(totalTimeCoin2<=0){
       totalTimeCoin2 = 0;
       programSelector2=0;
@@ -234,7 +281,7 @@ if(programSelector>0)
       }
       digitalWrite(inhibitCoin,LOW);
     }
-    displayTimeHmiSt2(minuteRamase2,secundeRamase2);
+   
   }
   //end Timer for St2
 if((isOk1 ==true)&&(isOk2 == true)){
@@ -250,3 +297,4 @@ if((isOk1 ==false)&&(isOk2 == false)){
   } 
 }
 
+#endif // VACUUM_H

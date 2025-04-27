@@ -9,7 +9,7 @@
 #include <elapsedMillis.h>
 
 const byte rxPin = 0; //rx
-const byte txPin = 1; // 13 tx
+const byte txPin = 13; // 13 tx
 SoftwareSerial dwinSerial(rxPin,txPin);
 bool erase = false;
 //Hmi Variabile
@@ -78,8 +78,8 @@ int count = 0 ;
 // constants won't change:
 const long interval = 400;           // interval at which to blink (milliseconds)
 //EndLed.h
-volatile int coinPin = 3;
-int inhibitCoin = 4; 
+volatile int coinPin = 18;  //3
+int inhibitCoin = 19;  //4
 long timeCoinMill = 0;
 int limitCoin ;
 volatile int coin = 0;
